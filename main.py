@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def statistics_by_region():
+
     return render_template('stat.html')
 
 @app.route('/stat_by_school')
