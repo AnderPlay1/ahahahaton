@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import db_functions as db
+import os.path
 import glob
 import os
 import re
@@ -98,7 +99,7 @@ def parse_the_data():
     res = []
     for f in files:
         print(f'Parsing {f}')
-        time = f.split('/')[-1].removesuffix('.html')
+        time = os.path.basename(f).removesuffix('.html')
         if 'First' in f:
             round = 1
         else:
