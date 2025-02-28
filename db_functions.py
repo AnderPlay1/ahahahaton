@@ -124,6 +124,15 @@ def get_rank_for_user(id_user, tour):
     result = cursor.execute("SELECT rank FROM Scores WHERE id_user = ? AND tour = ? ORDER BY time DESC LIMIT 1", [id_user, tour]).fetchall()[0][0]
     return result
 
+def get_rank_for_user_time(id_user, tour):
+    """
+    :param id_user: int
+    :param tour: int
+    :return: rank: List[Tuple(time, rank)]
+    """
+    result = cursor.execute("SELECT time, rank FROM Scores WHERE id_user = ? AND tour = ? ORDER BY time", [id_user, tour]).fetchall()[0][0]
+    return result
+
 def get_school_for_user(name, surname, patronymic):
     """
     :param name: str
