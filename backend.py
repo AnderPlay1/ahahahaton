@@ -222,3 +222,4 @@ def dashboard_data(id):
         "results": db.get_final_result_for_student(data[0], 2),
         "avatar": None,
     }
+
