@@ -35,7 +35,7 @@ def get_final_sum_for_user(id_user):
     :param id_user: int
     :return: result:int
     """
-    result = cursor.execute("SELECT task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE ID_user = ? AND time = (SELECT max(time) FROM Scores WHERE ID_user = ? AND tour = 2)", [id_user, id_user]).fetchall()
+    result = cursor.execute("SELECT task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE ID_user = ? AND time = 300 AND tour = 2", [id_user, id_user]).fetchall()
     if len(result) == 0:
         result = 0
     else:
