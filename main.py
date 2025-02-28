@@ -8,15 +8,15 @@ def statistics_by_region():
 
 @app.route('/stat_by_school')
 def statistics_by_school():
-    return render_template('stat.html')
+    return render_template('stat.html', arr = {})
 
 @app.route('/results')
 def results():
-    return render_template('stat.html')
+    return render_template('stat.html', arr = {})
 
 @app.route('/dashboard/<int:id>')
 def dashboard(id):
-    return render_template('stat.html')
+    return render_template('stat.html', arr = {})
 
 
 if __name__ == "__main__":

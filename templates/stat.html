@@ -58,6 +58,11 @@
     </script>
 </head>
 <body>
+    <nav style="position: fixed; top: 0; width: 100%; background-color: #333; padding: 15px; text-align: center; z-index: 1000;">
+        <a href="/" style="color: white; text-decoration: none; margin: 0 15px;">Главная</a>
+        <a href="/stat_by_school" style="color: white; text-decoration: none; margin: 0 15px;">Статистика</a>
+        <a href="/about" style="color: white; text-decoration: none; margin: 0 15px;">О проекте</a>
+    </nav>
     <div>
         <button id="participants-button" class="toggle-button active-button" onclick="showTable('participants-table', 'participants-button')">Участники</button>
         <button id="prize-winners-button" class="toggle-button" onclick="showTable('prize-winners-table', 'prize-winners-button')">Призёры</button>
@@ -67,9 +72,9 @@
     <table id="participants-table" class="ranking-table">
         <thead>
             <tr>
-                <th>Место</th>
+                <th style="width: 10%;">Место</th>
                 <th>Регион</th>
-                <th>Количество участников</th>
+                <th style="width: 50%;">Количество участников</th>
             </tr>
         </thead>
         <tbody>
@@ -85,13 +90,13 @@
     <table id="prize-winners-table" class="ranking-table hidden">
         <thead>
             <tr>
-                <th>Место</th>
+                <th style="width: 10%;">Место</th>
                 <th>Регион</th>
-                <th>Количество призёров</th>
+                <th style="width: 50%;">Количество призёров</th>
             </tr>
         </thead>
         <tbody>
-            {% for prizer in arr.prizery %}
+            {% for prizer in arr.prizer %}
                 <tr>
                     <td>{{ prizer.place }}</td>
                     <td>{{ prizer.region }}</td>
@@ -103,9 +108,9 @@
     <table id="winners-table" class="ranking-table hidden">
         <thead>
             <tr>
-                <th>Место</th>
+                <th style="width: 10%;">Место</th>
                 <th>Регион</th>
-                <th>Количество победителей</th>
+                <th style="width: 50%;">Количество победителей</th>
             </tr>
         </thead>
         <tbody>
@@ -121,9 +126,9 @@
     <table id="diplomas-table" class="ranking-table hidden">
         <thead>
             <tr>
-                <th>Место</th>
+                <th style="width: 10%;">Место</th>
                 <th>Регион</th>
-                <th>Количество дипломов</th>
+                <th style="width: 50%;">Количество дипломов</th>
             </tr>
         </thead>
         <tbody>
