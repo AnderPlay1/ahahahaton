@@ -104,4 +104,14 @@ def get_final_results_for_user(id_user):
     :param id_user: int
     :return:
     """
-    result = cursor.execute("SELECT task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE ID_user = ? ORDER BY tour, tyme")
+    result = cursor.execute("SELECT task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE ID_user = ? ORDER BY tour, tyme DESC LIMIT 1", [id_user]).fetchall()
+    return result
+
+def get_rank_for_user(id_user, tour):
+    """
+    :params id_user: int
+    :params tour: int
+    :return: place: str
+    """
+    result = cursor.execute("SELECT rank FROM Scores WHERE id_user = ? AND tour = ? ORDER BY time DESC LIMIT 1", [id_user, tour]).fetchall()[0][0]
+    return result
