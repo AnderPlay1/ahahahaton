@@ -1,27 +1,51 @@
 from flask import Flask, render_template, session, request, redirect, url_for, flash
-from backend import data_to_region_stat, data_to_school_stat
+from backend import data_to_region_stat, data_to_school_stat, dashboard_data
 import html_parser as parser
 
 app = Flask(__name__)
 
-@app.route('/')
+
+@app.route("/")
 def statistics_by_region():
-    return render_template('stat.html', arr = data_to_region_stat())
+    return render_template("stat.html", arr=data_to_region_stat())
 
-@app.route('/stat_by_school')
+
+@app.route("/stat_by_school")
 def statistics_by_school():
-    return render_template('stat.html', arr = data_to_school_stat())
+    return render_template("stat.html", arr=data_to_school_stat())
 
-@app.route('/results')
+
+@app.route("/results")
 def results():
-    return render_template('stat.html', arr = {})
+    return render_template("stat.html", arr={})
 
-@app.route('/dashboard/<int:id>')
+
+@app.route("/dashboard/<int:id>")
 def dashboard(id):
-    return render_template('stat.html', arr = {})
+    # user = dashboard_data(id)
+    user = {
+        "last_name": "Иванов",
+        "first_name": "Иван",
+        "middle_name": "Иванович",
+        "school": "Гимназия №1",
+        "region": "Москва",
+        "grade": 11,
+        "score": 100,
+        "place": 1,
+        "avatar": None,
+    }
+    return render_template(
+        "dashboard.html",
+        user_id=id,
+        user=user,
+        data=[(0, 377), (1000, 6), (6123, 98), (18000, 3)],
+        data2=[(0, 3), (1200, 6), (4123, 98), (18000, 3)],
+        score_data = [(0,0), (1200, 123), (2312, 200), (14780, 354), (18000, 377)],
+        score_data2 = [(0,377), (1200, 123 + 377), (2312, 200 + 377), (14780, 354 + 377), (18000, 377 + 377)],
+    )
 
 
 if __name__ == "__main__":
-    import __init__db
-    parser.populate_db()
+    # import __init__db
+    # parser.populate_db()
     app.run(host="0.0.0.0", port=5000)

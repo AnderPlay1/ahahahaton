@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOIDA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/group.css') }}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.3/purify.min.js"></script>
+    <script type="module">
+        import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+        document.querySelectorAll('.markdown').forEach((e) => {
+            e.innerHTML = DOMPurify.sanitize(marked.parse(e.innerText));
+        });
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .active-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .toggle-button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .ranking-table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        .ranking-table th,
+        .ranking-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .ranking-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .content {
+            padding-top: 20px;
+        }
+
+        .navbar {
+            text-align: center;
+            font-size: large;
+            margin-bottom: 0 !important;
+        }
+
+        .secondary-navbar {
+            margin-top: 0 !important;
+        }
+
+        .profile-card,
+        .additional-info {
+            width: 80%;
+            margin: 0 auto 20px auto;
+        }
+
+        .additional-info {
+            margin-top: 20px;
+        }
+
+        .achievements-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .achievement-card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px;
+            width: 30%;
+            height: 300px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            word-wrap: break-word;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .achievement-card h4 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .achievement-card .level {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            background-color: #f3f3f3;
+            display: block;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 20px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .progress {
+            background-color: #4caf50;
+            height: 100%;
+            position: absolute;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            text-align: center;
+            color: black;
+            position: absolute;
+            width: 100%;
+            line-height: 20px;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+            style="margin-bottom: 0; height: 90px; padding: 0;">
+            <div class="container-fluid h-100">
+                <div class="collapse navbar-collapse h-100 d-flex align-items-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <div class="collapse navbar-collapse" id="navbarResponsive" style="margin-top: -5px;"></div>
+                        <ul class="navbar-nav text-uppercase ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link js-scroll-trigger" href="/">Статистика по регионам</a>
+                            </li>
+                            <li>
+                                <a class="nav-link js-scroll-trigger" href="/stat_by_school">Статистика по школам</a>
+                            </li>
+                        </ul>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1 class="profile-title">👤 Личный кабинет</h1>
+        </div>
+
+        <div class="profile-card">
+            <div class="avatar-section">
+                <div class="avatar-circle">
+                    {% if user.region == "Санкт Петербург" %}
+                    <img src="{{ url_for('static', filename='images/' + 'piter.gif') }}" alt="Аватар пользователя"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                    {% elif user.avatar == None %}
+                    <span class="avatar-initials">{{ user.last_name[0] }}{{ user.first_name[0] }}</span>
+                    {% else %}
+                    <img src="{{ url_for('static', filename='avatars/' + user.avatar) }}" alt="Аватар пользователя"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="profile-info">
+                <div class="info-item">
+                    <span class="info-label">📛 ФИО:</span>
+                    <p class="info-value">{{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</p>
+                </div>
+                <!-- <div class="info-item">
+                    <span class="info-label">🌌 ID пользователя:</span>
+                    <p class="info-value">{{user_id}}</p>
+                </div> -->
+                <div class="info-item">
+                    <span class="info-label">📘 Класс:</span>
+                    <p class="info-value">{{ user.grade }} класс</p>
+
+                </div>
+                <div style="display: flex; gap: 20px; width: 100%;">
+                    <div class="info-item">
+                        <span class="info-label">🏫 Школа:</span>
+                        <p class="info-value">{{ user.school }}</p>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">📍 Регион:</span>
+                        <p class="info-value">{{ user.region }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="additional-info">
+            <div class="stats-card">
+                <h3>📊 Зависимость места от времени</h3>
+                <div>
+                    <canvas id="tasksChart"></canvas>
+                </div>
+                <script>
+                    // Get data from Flask and parse JSON
+                    const data = JSON.parse('{{ data | tojson | safe }}');
+                    const data2 = JSON.parse('{{ data2 | tojson | safe }}');
+
+                    // Format data for the line chart
+                    const formattedData = data.map(item => ({
+                        x: item[0], // first element is timestamp
+                        y: item[1]  // second element is rank
+                    }));
+
+                    // Adjust second tour data to start from 5 hours (18000 seconds)
+                    const formattedData2 = data2.map(item => ({
+                        x: item[0] + 18000, // Add 5 hours (18000 seconds)
+                        y: item[1]
+                    }));
+
+                    // Helper function to format seconds to HH:MM:SS
+                    function formatTime(seconds, hideFirstTour) {
+                        if (hideFirstTour && seconds >= 18000) {
+                            seconds -= 18000; // Subtract 5 hours when first tour is hidden
+                        }
+                        const hours = Math.floor(seconds / 3600);
+                        const minutes = Math.floor((seconds % 3600) / 60);
+                        const secs = seconds % 60;
+                        return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                    }
+
+                    // Chart configuration
+                    const ctx = document.getElementById('tasksChart').getContext('2d');
+                    const tasksChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            datasets: [{
+                                label: 'Первый тур',
+                                data: formattedData,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                tension: 0
+                            },
+                            {
+                                label: 'Второй тур',
+                                data: formattedData2,
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                tension: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                    onClick: function (e, legendItem, legend) {
+                                        const index = legendItem.datasetIndex;
+                                        const ci = legend.chart;
+                                        const meta = ci.getDatasetMeta(index);
+                                        meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+                                        ci.update();
+
+                                        // Update x-axis when toggling visibility
+                                        const firstTourHidden = ci.getDatasetMeta(0).hidden;
+                                        const secondTourHidden = ci.getDatasetMeta(1).hidden;
+                                        ci.options.scales.x.min = firstTourHidden ? 18000 : 0;
+                                        ci.options.scales.x.max = secondTourHidden ? 18000 : 36000;
+                                        ci.options.scales.x.ticks.callback = function (value) {
+                                            return formatTime(value, firstTourHidden);
+                                        };
+                                        ci.update();
+                                    }
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        title: function (context) {
+                                            const firstTourHidden = tasksChart.getDatasetMeta(0).hidden;
+                                            return formatTime(context[0].raw.x, firstTourHidden);
+                                        },
+                                        label: function (context) {
+                                            return `Место: ${context.raw.y}`;
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    type: 'linear',
+                                    min: 0,
+                                    max: 36000,
+                                    title: {
+                                        display: true,
+                                        text: 'Время (секунды)'
+                                    },
+                                    ticks: {
+                                        callback: function (value) {
+                                            return formatTime(value, false);
+                                        }
+                                    }
+                                },
+                                y: {
+                                    reverse: true,
+                                    min: 1,
+                                    max: 377,
+                                    title: {
+                                        display: true,
+                                        text: 'Место в рейтинге'
+                                    },
+                                    beginAtZero: false
+                                }
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="additional-info">
+            <div class="stats-card">
+                <h3>📊 Зависимость баллов от времени</h3>
+                <div><canvas id="scoreChart"></canvas></div>
+                <script>
+                    // Get data from Flask and parse JSON
+                    const scoreData = JSON.parse('{{ score_data | tojson | safe }}');
+                    const scoreData2 = JSON.parse('{{ score_data2 | tojson | safe }}');
+
+                    // Get final score from first tour
+                    const finalFirstTourScore = scoreData.length > 0 ? scoreData[scoreData.length - 1][1] : 0;
+
+                    // Format data for the line chart
+                    const formattedScoreData = scoreData.map(item => ({
+                        x: item[0], // timestamp
+                        y: item[1]  // score
+                    }));
+
+                    const formattedScoreData2 = scoreData2.map(item => ({
+                        x: item[0] + 18000, // Add 5 hours
+                        y: item[1] // Don't subtract initially
+                    }));
+
+                    // Chart configuration
+                    const ctxScore = document.getElementById('scoreChart').getContext('2d');
+                    const scoreChart = new Chart(ctxScore, {
+                        type: 'line',
+                        data: {
+                            datasets: [{
+                                label: 'Первый тур',
+                                data: formattedScoreData,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                tension: 0
+                            },
+                            {
+                                label: 'Второй тур',
+                                data: formattedScoreData2,
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                tension: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                    onClick: function (e, legendItem, legend) {
+                                        const index = legendItem.datasetIndex;
+                                        const ci = legend.chart;
+                                        const meta = ci.getDatasetMeta(index);
+                                        meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+
+                                        // Update axes when toggling visibility
+                                        const firstTourHidden = ci.getDatasetMeta(0).hidden;
+                                        const secondTourHidden = ci.getDatasetMeta(1).hidden;
+                                        
+                                        // Update second tour data based on visibility
+                                        if (firstTourHidden) {
+                                            ci.data.datasets[1].data = formattedScoreData2.map(point => ({
+                                                x: point.x,
+                                                y: point.y - finalFirstTourScore
+                                            }));
+                                            ci.options.scales.y.max = 400;
+                                        } else {
+                                            ci.data.datasets[1].data = formattedScoreData2;
+                                            ci.options.scales.y.max = 800;
+                                        }
+
+                                        // If second tour is hidden, set max to 400
+                                        if (secondTourHidden) {
+                                            ci.options.scales.y.max = 400;
+                                        }
+
+                                        ci.options.scales.x.min = firstTourHidden ? 18000 : 0;
+                                        ci.options.scales.x.max = secondTourHidden ? 18000 : 36000;
+                                        ci.options.scales.x.ticks.callback = function (value) {
+                                            return formatTime(value, firstTourHidden);
+                                        };
+                                        ci.update();
+                                    }
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        title: function (context) {
+                                            const firstTourHidden = scoreChart.getDatasetMeta(0).hidden;
+                                            return formatTime(context[0].raw.x, firstTourHidden);
+                                        },
+                                        label: function (context) {
+                                            return `Баллы: ${context.raw.y}`;
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    type: 'linear',
+                                    min: 0,
+                                    max: 36000,
+                                    title: {
+                                        display: true,
+                                        text: 'Время (секунды)'
+                                    },
+                                    ticks: {
+                                        callback: function (value) {
+                                            return formatTime(value, false);
+                                        }
+                                    }
+                                },
+                                y: {
+                                    min: 0,
+                                    max: 800,
+                                    title: {
+                                        display: true,
+                                        text: 'Баллы'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                </script>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

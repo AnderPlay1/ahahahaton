@@ -786,7 +786,9 @@ h2.comments-heading {
 /* Стили для личного кабинета */
 .profile-container {
     max-width: 1200px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
+    margin-left: 10%;
+    margin-right: 10%;
     padding: 40px 20px;
 }
 
