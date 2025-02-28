@@ -74,7 +74,7 @@ def parse_spb():
 
 def parse_the_data():
     '''
-    @returns {
+    @returns [{
       'rank': str,
       'name': str,
       'region': str,
@@ -85,7 +85,7 @@ def parse_the_data():
       'round': int,
       'result': Optional[string] # участник/призер/победитель,
       'time': int,               # 120/150/...
-    }
+    }]
     '''
     moscow_data = parse_moscow()
     spb_data = parse_spb()
