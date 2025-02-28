@@ -34,7 +34,7 @@
                             {% for participant in participants %}
                             <tr class="row{{ loop.index0 % 2 }}">
                                 <td class="rankl">{{ participant.place }}</td>
-                                <td class="party"><a href="dashboard/{{ id }}">{{ participant.name }} ({{ participant.region }}, {{ participant.grade
+                                <td class="party"><a href="dashboard/{{ participant.id }}">{{ participant.name }} ({{ participant.region }}, {{ participant.grade
                                     }} класс)</a></td>
                                 {% for score in participant.scores %}
                                 <td class="ioiprob">
