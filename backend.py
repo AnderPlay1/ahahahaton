@@ -213,7 +213,7 @@ def dashboard_data(id):
         "middle_name": data[0][1],
         "school": data[0][6],
         "region": data[0][5],
-        "class": data[0][4],
+        "class": 11,
         "score1": score1,
         "score2": score2,
         "score_sum": db.get_final_sum_for_user(data[0][0]),
