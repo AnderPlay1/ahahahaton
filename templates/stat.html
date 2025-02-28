@@ -5,12 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOIDA</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
         .hidden {
             display: none;
         }
         .active-button {
             background-color: #4CAF50;
             color: white;
+        }
+        .toggle-button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .ranking-table {
+            width: 80%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+        .ranking-table th, .ranking-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .ranking-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
         }
     </style>
     <script>
@@ -40,7 +73,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for participant in participants %}
+            {% for participant in arr.participants %}
                 <tr>
                     <td>{{ participant.place }}</td>
                     <td>{{ participant.region }}</td>
@@ -58,11 +91,11 @@
             </tr>
         </thead>
         <tbody>
-            {% for prize_winner in prize_winners %}
+            {% for prizer in arr.prizery %}
                 <tr>
-                    <td>{{ prize_winner.place }}</td>
-                    <td>{{ prize_winner.region }}</td>
-                    <td>{{ prize_winner.count }}</td>
+                    <td>{{ prizer.place }}</td>
+                    <td>{{ prizer.region }}</td>
+                    <td>{{ prizer.count }}</td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -76,7 +109,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for winner in winners %}
+            {% for winner in arr.winners %}
                 <tr>
                     <td>{{ winner.place }}</td>
                     <td>{{ winner.region }}</td>
@@ -94,11 +127,11 @@
             </tr>
         </thead>
         <tbody>
-            {% for diploma in winners %}
+            {% for diploma in arr.diplomas %}
                 <tr>
                     <td>{{ diploma.place }}</td>
-                    <td>{{ diploma.region }}</td>
-                    <td>{{ diploma.count }}</td>
+                    <td>{{ diploma.name }}</td>
+                    <td>{{ diploma.cnt }}</td>
                 </tr>
             {% endfor %}
         </tbody>

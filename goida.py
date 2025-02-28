@@ -1,5 +1,6 @@
-def places(arr: list[dict[str, int]]) -> list[dict[str, str, int]]:
-    arr2 = [(arr[x]['name'], arr[x]['cnt']) for x in range(len(arr))]
+def places(arr: dict[str, int]) -> list[dict[str, str, int]]:
+    arr2 = list(arr.items())
+    print(arr2)
     arr2.sort(key=lambda x: (x[1], x[0]))
     qqq = list(arr2[x][1] for x in range(len(arr2)))
     places = []
@@ -16,4 +17,4 @@ def places(arr: list[dict[str, int]]) -> list[dict[str, str, int]]:
         now += cnt
     return places
 if __name__ == "__main__":
-    print(places([{'name': 'a', 'cnt': 1}, {'name': 'b', 'cnt': 2}, {'name': 'c', 'cnt': 1}, {'name': 'd', 'cnt': 1}, {'name': 'e', 'cnt': 2}, {'name': 'f', 'cnt': 1}]))
+    print(places({"Москва": 228, "ПИТЕР": 1337, "Казань": 228, "Самара": 1337, "Краснодар": 1337}))
