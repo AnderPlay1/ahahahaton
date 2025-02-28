@@ -82,3 +82,26 @@ def get_students_for_region(region):
     """
     result = cursor.execute("SELECT * FROM Users WHERE region = ?", [region]).fetchall()
     return result
+
+def get_students_for_school(school):
+    """
+    :param school: str
+    :return: List[Tuple(ID:int, name:str, surname:str, patronymic:str, form:int, region:str, school:str)]
+    """
+    result = cursor.execute("SELECT * FROM Users WHERE school = ?", [school]).fetchall()
+    return result
+
+def get_student(id_user):
+    """
+    :param id_user: int
+    :return: List[Tuple(ID:int, name:str, surname:str, patronymic:str, form:int, region:str, school:str)]
+    """
+    result = cursor.execute("SELECT * FROM Users WHERE ID = ?", [id_user]).fetchall()
+    return result
+
+def get_final_results_for_user(id_user):
+    """
+    :param id_user: int
+    :return:
+    """
+    result = cursor.execute("SELECT task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE ID_user = ? ORDER BY tour, tyme")
