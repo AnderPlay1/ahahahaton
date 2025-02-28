@@ -49,7 +49,7 @@ def data_to_region_stat():
 def places(arr: dict[str, int]) -> list[dict[str, str, int]]:
     arr2 = list(arr.items())
     #print(arr2)
-    arr2.sort(key=lambda x: (x[1], x[0]))
+    arr2.sort(key=lambda x: (x[1], x[0]), reverse=True)
     qqq = list(arr2[x][1] for x in range(len(arr2)))
     places = []
     now = 1
@@ -104,7 +104,7 @@ def data_to_school_stat():
 
     data = []# ([0.id, 1.name, 2.sur, 3.opt, 4.form, 5.reg, 6.school])
     for user in data:
-        points = db.get_final_sum_for_user(user[0]) #запрос к бд по сумме баллам
+        points = sum(db.get_final_sum_for_user(user[0])) #запрос к бд по сумме баллам
         if user[6] not in participants:
             participants[user[6]] = 1
         else:
@@ -143,11 +143,22 @@ def results():
     :return:
     '''
 
-
 def dashboard_data(id):
     '''
     :param id:int
-    :return:
+    :return: Dict('first_name': string
+        'last_name': string
+        "middle_name": string,
+        "school": string,
+        "region": string,
+        "class": int,
+        "score1": int,
+        "score2": int,
+        "score_sum": int,
+        "place1": string,
+        "place2": string,
+        "results": list,
+        "avatar": None)
     '''
     data = db.get_student(id)
     # ([0.id, 1.name, 2.sur, 3.opt, 4.form, 5.reg, 6.school])

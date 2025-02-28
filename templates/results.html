@@ -29,7 +29,7 @@
         }
 
         .active-button {
-            background-color: #0097a8;
+            background-color: #4CAF50;
             color: white;
         }
 
@@ -74,12 +74,6 @@
         .secondary-navbar {
             margin-top: 0 !important;
         }
-
-        /* .secondary-navbar .navbar-nav {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-        } */
     </style>
     <script>
         function showTable(tableId, buttonId) {
@@ -95,7 +89,8 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="margin-bottom: 0; height: 90px; padding: 0;">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+            style="margin-bottom: 0; height: 90px; padding: 0;">
             <div class="container-fluid h-100">
                 <div class="collapse navbar-collapse h-100 d-flex align-items-center" id="navbarNav">
                     <ul class="navbar-nav">
@@ -139,88 +134,7 @@
             </div>
         </nav>
     </header>
-    <div class="content">
-        <table id="participants-table" class="ranking-table">
-            <thead>
-                <tr>
-                    <th style="width: 10%;">Место</th>
-                    <th>Школа</th>
-                    <th>Регион</th>
-                    <th style="width: 20%;">Количество участников</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for participant in arr.participants %}
-                <tr>
-                    <td>{{ participant.place }}</td>
-                    <td>{{ participant.name }}</td>
-                    <td>{{ participant.region }}</td>
-                    <td>{{ participant.count }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <table id="prize-winners-table" class="ranking-table hidden">
-            <thead>
-                <tr>
-                    <th style="width: 10%;">Место</th>
-                    <th>Школа</th>
-                    <th>Регион</th>
-                    <th style="width: 20%;">Количество призёров</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for prizer in arr.prizer %}
-                <tr>
-                    <td>{{ prizer.place }}</td>
-                    <td>{{ prizer.name }}</td>
-                    <td>{{ prizer.region }}</td>
-                    <td>{{ prizer.count }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <table id="winners-table" class="ranking-table hidden">
-            <thead>
-                <tr>
-                    <th style="width: 10%;">Место</th>
-                    <th>Школа</th>
-                    <th>Регион</th>
-                    <th style="width: 20%;">Количество победителей</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for winner in arr.winners %}
-                <tr>
-                    <td>{{ winner.place }}</td>
-                    <td>{{ winner.name }}</td>
-                    <td>{{ winner.region }}</td>
-                    <td>{{ winner.count }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <table id="diplomas-table" class="ranking-table hidden">
-            <thead>
-                <tr>
-                    <th style="width: 10%;">Место</th>
-                    <th>Школа</th>
-                    <th>Регион</th>
-                    <th style="width: 20%;">Количество дипломов</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for diploma in arr.diplomas %}
-                <tr>
-                    <td>{{ diploma.place }}</td>
-                    <td>{{ diploma.name }}</td>
-                    <td>{{ diploma.region }}</td>
-                    <td>{{ diploma.cnt }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    
 </body>
 
 </html>
