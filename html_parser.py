@@ -5,7 +5,7 @@ import os
 import re
 
 def parse_file(contents: str):
-    html = BeautifulSoup(contents)
+    html = BeautifulSoup(contents, features="html.parser")
     standings = html.select('#standings > tbody > tr')
     result = []
     for i in standings:

@@ -8,7 +8,7 @@ cursor.execute("""
         ID_user  INTEGER REFERENCES Users (ID),
         time     TEXT,
         tour     INTEGER,
-        rank     TEXT
+        rank     TEXT,
         task_1   INTEGER,
         task_2   INTEGER,
         task_3   INTEGER,
