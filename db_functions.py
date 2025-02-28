@@ -139,7 +139,7 @@ def get_scores_for_user_time(id_user, tour):
     :param tour: int
     :return: rank: List[Tuple(time, scores...)]
     """
-    r = cursor.execute("SELECT user, task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE ID_user = ? AND tour =? ORDER BY time", [id_user, tour]).fetchall()
+    r = cursor.execute("SELECT time, task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE ID_user = ? AND tour =? ORDER BY time", [id_user, tour]).fetchall()
     result = []
     for i in r:
         c = 0

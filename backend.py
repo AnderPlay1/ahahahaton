@@ -209,8 +209,8 @@ def dashboard_data(id):
 
     return {
         "first_name": data[0][1],
-        "last_name": data[0][1],
-        "middle_name": data[0][1],
+        "last_name": data[0][2],
+        "middle_name": data[0][3],
         "school": data[0][6],
         "region": data[0][5],
         "class": 11,
