@@ -3,3 +3,4 @@ test_server.py
 .env
 .venv/
 __pycache__/
+*.db
