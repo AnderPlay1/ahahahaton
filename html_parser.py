@@ -77,6 +77,8 @@ def parse_the_data():
     @returns [{
       'rank': str,
       'name': str,
+      'surname': str,
+      'patronimyc': str,
       'region': str,
       'grade': int,
       'tasks': List[int]         # -1 - no attempts, other - score
@@ -114,6 +116,13 @@ def parse_the_data():
                 
             i['round'] = round
             i['time'] = int(time)
+            
+            name_parts = i['name'].split(' ')
+            name_parts += [''] * (3 - len(name_parts))
+            i['name'] = name_parts[1].strip()
+            i['surname'] = name_parts[0].strip()
+            i['patronimyc'] = name_parts[2].strip()
+
             res.append(i)
     return res
 
