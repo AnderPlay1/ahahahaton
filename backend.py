@@ -119,7 +119,7 @@ def data_to_school_stat():
         else:
             participants[user[6]] += 1
 
-        if 464 <= points < 573:
+        if points >= 573:
             if user[6] not in winners:
                 winners[user[6]] = 1
             else:
@@ -130,9 +130,9 @@ def data_to_school_stat():
             else:
                 diplomas[user[6]] += 1
 
-        if points >= 573:
+        if 464 <= points < 573:
             if user[6] not in prizer:
-                prizer[user[6]] = 25
+                prizer[user[6]] = 1
             else:
                 prizer[user[6]] += 1
 
