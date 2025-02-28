@@ -33,7 +33,7 @@
                         <tbody>
                             {% for participant in participants %}
                             <tr class="row{{ loop.index0 % 2 }}">
-                                <td class="rankl">{{ loop.index }}</td>
+                                <td class="rankl">{{ participant.place }}</td>
                                 <td class="party"><a href="dashboard/{{ id }}">{{ participant.name }} ({{ participant.region }}, {{ participant.grade
                                     }} класс)</a></td>
                                 {% for score in participant.scores %}

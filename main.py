@@ -20,21 +20,24 @@ def statistics_by_school():
 @app.route("/results")
 def results():
     # print(search("both", "end", "all", "all"))
-    for human in search("both", "end", "all", "all"):
-        print(db.get_student(human[1]), len(db.get_student(human[1])))
+    for human in search("2", "end", "all", "all"):
+        print(human)
         # if len(db.get_student(human[1])) < 6:
         #     print(human, db.get_student(human[1]))
     users = [
-        {
-            "name": db.get_student(human[0][1]),
-            "region": db.get_student(human[0][1])[5],
-            "grade": db.get_student(human[0][1])[4],
-            "school": db.get_student(human[0][1])[6],
-            "scores": human[0][5:],
-            "total": sum(human[0][5:]),
+        {   
+            "place": human[4],
+            "id": human[1],
+            "name": ' '.join(db.get_student(human[1])[0][1:4]),
+            "region": db.get_student(human[1])[0][5],
+            "grade": db.get_student(human[1])[0][4],
+            "school": db.get_student(human[1])[0][6],
+            "scores": human[5:],
+            "total": sum(human[5:]),
         }
         for human in search("both", "end", "all", "all")
     ]
+    users.sort(key=lambda x: (-x["total"], x["name"]))
     return render_template(
         "results.html",
         participants=users,

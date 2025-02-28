@@ -199,7 +199,7 @@ def search(round: str, time: str, grade: str, school: str):
             round = int(round)
         # когда Коля изменит схему может баговать
         if time == 'end':
-            time = 99999
+            time = 30000
         else:
             time = int(time)
         results = get_results_for_user_for_tour_before(uid, round, time)
