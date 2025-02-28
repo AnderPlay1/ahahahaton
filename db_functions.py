@@ -19,11 +19,11 @@ def add_results(data):
     """
     for item in data:
         params = [item['name'], item['surname'], item['patronymic'], item["grade"], item['region'], item['school']]
-        id_user = cursor.execute("SELECT ID FROM Users WHERE name = ? AND surname = ? AND patronymic = ? AND form = ? AND region = ? AND school = ?", params).fetchall()
+        id_user = cursor.execute("SELECT ID FROM Users WHERE name = ? AND surname = ? AND patronymic = ?", params[:3]).fetchall()
         if len(id_user) == 0:
             add_user(item)
             id_user = cursor.execute(
-                "SELECT ID FROM Users WHERE name = ? AND surname = ? AND patronymic = ? AND form = ? AND region = ? AND school = ?", params).fetchall()
+                "SELECT ID FROM Users WHERE name = ? AND surname = ? AND patronymic = ?", params[:3]).fetchall()
         id_user = id_user[0][0]
         params = [id_user, item["time"], item["round"], item["rank"]]
         params += item["tasks"]
