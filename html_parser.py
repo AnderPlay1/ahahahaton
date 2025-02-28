@@ -64,6 +64,8 @@ def parse_spb():
         rank, name, *tasks, total = data[i].split(';')
         parser = r'(.*) \((.*), ([\d]+) класс\)'
         match = re.search(parser, name)
+        if not match:
+            print(f'Match failed on `{name}`')
         name, school, grade = match.group(1), match.group(2), match.group(3)
         res.append({
             'name': name,
