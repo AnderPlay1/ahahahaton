@@ -40,7 +40,13 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Данные для таблицы участников -->
+            {% for participant in participants %}
+                <tr>
+                    <td>{{ participant.place }}</td>
+                    <td>{{ participant.region }}</td>
+                    <td>{{ participant.count }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
     <table id="prize-winners-table" class="ranking-table hidden">
@@ -52,7 +58,13 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Данные для таблицы призёров -->
+            {% for prize_winner in prize_winners %}
+                <tr>
+                    <td>{{ prize_winner.place }}</td>
+                    <td>{{ prize_winner.region }}</td>
+                    <td>{{ prize_winner.count }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
     <table id="winners-table" class="ranking-table hidden">
@@ -64,7 +76,13 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Данные для таблицы победителей -->
+            {% for winner in winners %}
+                <tr>
+                    <td>{{ winner.place }}</td>
+                    <td>{{ winner.region }}</td>
+                    <td>{{ winner.count }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
     <table id="diplomas-table" class="ranking-table hidden">
@@ -76,7 +94,13 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Данные для таблицы дипломов -->
+            {% for diploma in winners %}
+                <tr>
+                    <td>{{ diploma.place }}</td>
+                    <td>{{ diploma.region }}</td>
+                    <td>{{ diploma.count }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 </body>
