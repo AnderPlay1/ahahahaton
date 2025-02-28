@@ -8,7 +8,7 @@ def add_user(data):
     :param data: Dict{name:str, surname:str, patronymic:str, form:int, region:str, school:str}
     :return: -
     """
-    params = [data['name'], data['surname'], data['patronymic'], data['region'], data['school']]
+    params = [data['name'], data['surname'], data['patronymic'], data['form'], data['region'], data['school']]
     cursor.execute("INSERT INTO Users (name, surname, patronymic, form, region, school) VALUES (?, ?, ?, ?, ?, ?)", params)
     connect.commit()
 
@@ -28,7 +28,7 @@ def add_results(data):
         id_user = id_user[0][0]
         params = [id_user, item["time"], item["round"], item["rank"]]
         params += item["score"]
-        cursor.execute("INSERT INTO Scores (ID_user, time, tour, rank, task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params)
+        cursor.execute("INSERT INTO Scores (ID_user, time, tour, rank, task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params)
     connect.commit()
 
 def get_final_sum_for_user(id_user):
