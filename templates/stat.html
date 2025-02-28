@@ -1,27 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOIDA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/group.css') }}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.3/purify.min.js"></script>
+    <script type="module">
+        import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+        document.querySelectorAll('.markdown').forEach((e) => {
+            e.innerHTML = DOMPurify.sanitize(marked.parse(e.innerText));
+        });
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
             margin: 0;
             background-color: #f4f4f4;
         }
+
         .hidden {
             display: none;
         }
+
         .active-button {
             background-color: #4CAF50;
             color: white;
         }
+
         .toggle-button {
             margin: 10px;
             padding: 10px 20px;
@@ -29,27 +40,45 @@
             cursor: pointer;
             font-size: 16px;
         }
+
         .ranking-table {
             width: 80%;
-            margin: 20px 0;
+            margin: 20px auto;
             border-collapse: collapse;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             background-color: white;
         }
-        .ranking-table th, .ranking-table td {
+
+        .ranking-table th,
+        .ranking-table td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
         }
+
         .ranking-table th {
             background-color: #f2f2f2;
             font-weight: bold;
+        }
+
+        .navbar+.secondary-navbar {
+            margin-top: 0;
+        }
+
+        .content {
+            padding-top: 20px;
+        }
+
+        .secondary-navbar .navbar-nav {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
         }
     </style>
     <script>
         function showTable(tableId, buttonId) {
             var tables = document.querySelectorAll('.ranking-table');
-            var buttons = document.querySelectorAll('.toggle-button');
+            var buttons = document.querySelectorAll('.nav-link');
             tables.forEach(table => table.classList.add('hidden'));
             buttons.forEach(button => button.classList.remove('active-button'));
             document.getElementById(tableId).classList.remove('hidden');
@@ -57,89 +86,124 @@
         }
     </script>
 </head>
+
 <body>
-    <nav style="position: fixed; top: 0; width: 100%; background-color: #333; padding: 15px; text-align: center; z-index: 1000;">
-        <a href="/" style="color: white; text-decoration: none; margin: 0 15px;">Главная</a>
-        <a href="/stat_by_school" style="color: white; text-decoration: none; margin: 0 15px;">Статистика</a>
-        <a href="/about" style="color: white; text-decoration: none; margin: 0 15px;">О проекте</a>
-    </nav>
-    <div>
-        <button id="participants-button" class="toggle-button active-button" onclick="showTable('participants-table', 'participants-button')">Участники</button>
-        <button id="prize-winners-button" class="toggle-button" onclick="showTable('prize-winners-table', 'prize-winners-button')">Призёры</button>
-        <button id="winners-button" class="toggle-button" onclick="showTable('winners-table', 'winners-button')">Победители</button>
-        <button id="diplomas-button" class="toggle-button" onclick="showTable('diplomas-table', 'diplomas-button')">Дипломы</button>
-    </div>
-    <table id="participants-table" class="ranking-table">
-        <thead>
-            <tr>
-                <th style="width: 10%;">Место</th>
-                <th>Регион</th>
-                <th style="width: 50%;">Количество участников</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for participant in arr.participants %}
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <div class="collapse navbar-collapse" id="navbarResponsive">
+                            <ul class="navbar-nav text-uppercase ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link js-scroll-trigger" href="/">Главная</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Additional Navbar -->
+        <nav class="navbar navbar-expand-lg secondary-navbar">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="secondaryNavbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active-button" href="#" id="participants-button"
+                                onclick="showTable('participants-table', 'participants-button')">Участники</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="prize-winners-button"
+                                onclick="showTable('prize-winners-table', 'prize-winners-button')">Призёры</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="winners-button"
+                                onclick="showTable('winners-table', 'winners-button')">Победители</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="diplomas-button"
+                                onclick="showTable('diplomas-table', 'diplomas-button')">Дипломы</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="content">
+        <table id="participants-table" class="ranking-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">Место</th>
+                    <th>Регион</th>
+                    <th style="width: 50%;">Количество участников</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for participant in arr.participants %}
                 <tr>
                     <td>{{ participant.place }}</td>
-                    <td>{{ participant.region }}</td>
+                    <td>{{ participant.name }}</td>
                     <td>{{ participant.count }}</td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <table id="prize-winners-table" class="ranking-table hidden">
-        <thead>
-            <tr>
-                <th style="width: 10%;">Место</th>
-                <th>Регион</th>
-                <th style="width: 50%;">Количество призёров</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for prizer in arr.prizer %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <table id="prize-winners-table" class="ranking-table hidden">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">Место</th>
+                    <th>Регион</th>
+                    <th style="width: 50%;">Количество призёров</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prizer in arr.prizer %}
                 <tr>
                     <td>{{ prizer.place }}</td>
-                    <td>{{ prizer.region }}</td>
+                    <td>{{ prizer.name }}</td>
                     <td>{{ prizer.count }}</td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <table id="winners-table" class="ranking-table hidden">
-        <thead>
-            <tr>
-                <th style="width: 10%;">Место</th>
-                <th>Регион</th>
-                <th style="width: 50%;">Количество победителей</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for winner in arr.winners %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <table id="winners-table" class="ranking-table hidden">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">Место</th>
+                    <th>Регион</th>
+                    <th style="width: 50%;">Количество победителей</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for winner in arr.winners %}
                 <tr>
                     <td>{{ winner.place }}</td>
-                    <td>{{ winner.region }}</td>
+                    <td>{{ winner.name }}</td>
                     <td>{{ winner.count }}</td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <table id="diplomas-table" class="ranking-table hidden">
-        <thead>
-            <tr>
-                <th style="width: 10%;">Место</th>
-                <th>Регион</th>
-                <th style="width: 50%;">Количество дипломов</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for diploma in arr.diplomas %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <table id="diplomas-table" class="ranking-table hidden">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">Место</th>
+                    <th>Регион</th>
+                    <th style="width: 50%;">Количество дипломов</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for diploma in arr.diplomas %}
                 <tr>
                     <td>{{ diploma.place }}</td>
                     <td>{{ diploma.name }}</td>
                     <td>{{ diploma.cnt }}</td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
+
 </html>
