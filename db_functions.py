@@ -103,7 +103,7 @@ def get_final_results_for_user(id_user):
     :param id_user: int
     :return: List[Tuple(ID_user:int, task_1:int, task_2:int, ... , task_8:int)]
     """
-    result = cursor.execute("SELECT ID_user, task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE ID_user = ? ORDER BY tour, tyme DESC LIMIT 1", [id_user]).fetchall()
+    result = cursor.execute("SELECT ID_user, task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE ID_user = ? ORDER BY tour, tone me DESC LIMIT 1", [id_user]).fetchall()
     return result
 
 def get_rank_for_user(id_user, tour):
