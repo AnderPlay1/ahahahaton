@@ -130,7 +130,16 @@ def get_rank_for_user_time(id_user, tour):
     :param tour: int
     :return: rank: List[Tuple(time, rank)]
     """
-    result = cursor.execute("SELECT time, rank FROM Scores WHERE id_user = ? AND tour = ? ORDER BY time", [id_user, tour]).fetchall()[0][0]
+    result = cursor.execute("SELECT time, rank FROM Scores WHERE id_user = ? AND tour = ? ORDER BY time", [id_user, tour]).fetchall()
+    return result
+
+def get_scores_for_user_time(id_user, tour):
+    """
+    :param id_user: int
+    :param tour: int
+    :return: rank: List[Tuple(time, scores...)]
+    """
+    result = cursor.execute("SELECT user, task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE ID_user = ? AND tour =? ORDER BY time", [id_user, tour]).fetchall()
     return result
 
 def get_school_for_user(name, surname, patronymic):
