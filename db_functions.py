@@ -215,6 +215,7 @@ def search(round: str, time: str, grade: str, school: str):
         res.append(results[0])
     
     # если будешь добавлять сортировку и все такое, то сюда
+    # print(res)
     return res
 
 def get_student_for_region(region):

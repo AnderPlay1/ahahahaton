@@ -1,140 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:locale="locale">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOIDA</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/group.css') }}" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.3/purify.min.js"></script>
-    <script type="module">
-        import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
-        document.querySelectorAll('.markdown').forEach((e) => {
-            e.innerHTML = DOMPurify.sanitize(marked.parse(e.innerText));
-        });
-    </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f4f4;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .active-button {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .toggle-button {
-            margin: 10px;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .ranking-table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            background-color: white;
-        }
-
-        .ranking-table th,
-        .ranking-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-
-        .ranking-table th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-
-        .content {
-            padding-top: 20px;
-        }
-
-        .navbar {
-            text-align: center;
-            font-size: large;
-            margin-bottom: 0 !important;
-        }
-
-        .secondary-navbar {
-            margin-top: 0 !important;
-        }
-    </style>
-    <script>
-        function showTable(tableId, buttonId) {
-            var tables = document.querySelectorAll('.ranking-table');
-            var buttons = document.querySelectorAll('.nav-link');
-            tables.forEach(table => table.classList.add('hidden'));
-            buttons.forEach(button => button.classList.remove('active-button'));
-            document.getElementById(tableId).classList.remove('hidden');
-            document.getElementById(buttonId).classList.add('active-button');
-        }
-    </script>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Результаты</title>
+    <link href="{{ url_for('static', filename='css/standings2.css') }}" rel="stylesheet">
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
-            style="margin-bottom: 0; height: 90px; padding: 0;">
-            <div class="container-fluid h-100">
-                <div class="collapse navbar-collapse h-100 d-flex align-items-center" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <div class="collapse navbar-collapse" id="navbarResponsive" style="margin-top: -5px;"></div>
-                        <ul class="navbar-nav text-uppercase ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link js-scroll-trigger" href="/">Статистика по регионам</a>
-                            </li>
-                            <li>
-                                <a class="nav-link js-scroll-trigger" href="/stat_by_school">Статистика по школам</a>
-                            </li>
-                        </ul>
-                </div>
-                </ul>
-            </div>
-            </div>
-        </nav>
-        <!-- Additional Navbar -->
-        <nav class="navbar navbar-expand-lg secondary-navbar">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="secondaryNavbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active-button" href="#" id="participants-button"
-                                onclick="showTable('participants-table', 'participants-button')">Участники</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" id="prize-winners-button"
-                                onclick="showTable('prize-winners-table', 'prize-winners-button')">Призёры</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" id="winners-button"
-                                onclick="showTable('winners-table', 'winners-button')">Победители</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" id="diplomas-button"
-                                onclick="showTable('diplomas-table', 'diplomas-button')">Дипломы</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    
+    <table class="wrapper">
+        <tr>
+            <td>
+                <center><a name="name">
+                        <h2>Тридцать шестая всероссийская олимпиада школьников по информатике, Первый тур</h2>
+                    </a>
+                    <p>5:00:00 из 5:00:00<br>статус: закончен</p>
+                    <table class="standings" id="standings">
+                        <thead>
+                            <tr class="header">
+                                <th class="rankl">Место</th>
+                                <th class="party">Участник</th>
+                                <th class="problem" title="Беспилотная аэрологистика">1</th>
+                                <th class="problem" title="2026">2</th>
+                                <th class="problem" title="Кейс на рейс">3</th>
+                                <th class="problem" title="Рамазан и капуста">4</th>
+                                <th class="problem" title="Восстание газонокосилок">5</th>
+                                <th class="problem" title="Интерактивные переходы">6</th>
+                                <th class="problem" title="Гонка дронов">7</th>
+                                <th class="problem" title="За связь без перебоев">8</th>
+                                <th class="solved">Баллы</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for participant in participants %}
+                            <tr class="row{{ loop.index0 % 2 }}">
+                                <td class="rankl">{{ loop.index }}</td>
+                                <td class="party"><a href="dashboard/{{ id }}">{{ participant.name }} ({{ participant.region }}, {{ participant.grade
+                                    }} класс)</a></td>
+                                {% for score in participant.scores %}
+                                <td class="ioiprob">
+                                    {% if score == 100 %}
+                                    <i>{{ score }}</i>
+                                    {% elif score == -1 %}
+                                    <i>.</i>
+                                    {% else %}
+                                    <u>{{ score }}</u>
+                                    {% endif %}
+                                </td>
+                                {% endfor %}
+                                <td>{{ participant.total }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </center>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>
