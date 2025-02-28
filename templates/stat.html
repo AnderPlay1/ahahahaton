@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOIDA</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+        .active-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+    <script>
+        function showTable(tableId, buttonId) {
+            var tables = document.querySelectorAll('.ranking-table');
+            var buttons = document.querySelectorAll('.toggle-button');
+            tables.forEach(table => table.classList.add('hidden'));
+            buttons.forEach(button => button.classList.remove('active-button'));
+            document.getElementById(tableId).classList.remove('hidden');
+            document.getElementById(buttonId).classList.add('active-button');
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <button id="participants-button" class="toggle-button active-button" onclick="showTable('participants-table', 'participants-button')">Участники</button>
+        <button id="prize-winners-button" class="toggle-button" onclick="showTable('prize-winners-table', 'prize-winners-button')">Призёры</button>
+        <button id="winners-button" class="toggle-button" onclick="showTable('winners-table', 'winners-button')">Победители</button>
+        <button id="diplomas-button" class="toggle-button" onclick="showTable('diplomas-table', 'diplomas-button')">Дипломы</button>
+    </div>
+    <table id="participants-table" class="ranking-table">
+        <thead>
+            <tr>
+                <th>Место</th>
+                <th>Регион</th>
+                <th>Количество участников</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Данные для таблицы участников -->
+        </tbody>
+    </table>
+    <table id="prize-winners-table" class="ranking-table hidden">
+        <thead>
+            <tr>
+                <th>Место</th>
+                <th>Регион</th>
+                <th>Количество призёров</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Данные для таблицы призёров -->
+        </tbody>
+    </table>
+    <table id="winners-table" class="ranking-table hidden">
+        <thead>
+            <tr>
+                <th>Место</th>
+                <th>Регион</th>
+                <th>Количество победителей</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Данные для таблицы победителей -->
+        </tbody>
+    </table>
+    <table id="diplomas-table" class="ranking-table hidden">
+        <thead>
+            <tr>
+                <th>Место</th>
+                <th>Регион</th>
+                <th>Количество дипломов</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Данные для таблицы дипломов -->
+        </tbody>
+    </table>
+</body>
+</html>
