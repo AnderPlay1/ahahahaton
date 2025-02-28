@@ -62,16 +62,10 @@ def dashboard(id):
         "dashboard.html",
         user_id=id,
         user=user,
-        data=[(0, 377), (1000, 6), (6123, 98), (18000, 3)],
-        data2=[(0, 3), (1200, 6), (4123, 98), (18000, 3)],
-        score_data=[(0, 0), (1200, 123), (2312, 200), (14780, 354), (18000, 377)],
-        score_data2=[
-            (0, 377),
-            (1200, 123 + 377),
-            (2312, 200 + 377),
-            (14780, 354 + 377),
-            (18000, 377 + 377),
-        ],
+        score_data=db.get_scores_for_user_time(id, 1),
+        score_data2=db.get_scores_for_user_time(id, 2),
+        data=db.get_rank_for_user_time(id, 1),
+        data2=db.get_rank_for_user_time(id, 2),
     )
 
 
