@@ -204,22 +204,22 @@ def dashboard_data(id):
     """
     data = db.get_student(id)
     # ([0.id, 1.name, 2.sur, 3.opt, 4.form, 5.reg, 6.school])
-    score1 = sum(db.get_final_result_for_student(data[0], 1))
-    score2 = sum(db.get_final_result_for_student(data[0], 2)) - score1
+    score1 = sum(db.get_final_result_for_student(data[0][0], 1))
+    score2 = sum(db.get_final_result_for_student(data[0][0], 2)) - score1
 
     return {
-        "first_name": data[1],
-        "last_name": data[1],
-        "middle_name": data[1],
-        "school": data[6],
-        "region": data[5],
-        "class": data[4],
+        "first_name": data[0][1],
+        "last_name": data[0][1],
+        "middle_name": data[0][1],
+        "school": data[0][6],
+        "region": data[0][5],
+        "class": data[0][4],
         "score1": score1,
         "score2": score2,
-        "score_sum": db.get_final_sum_for_user(data[0]),
-        "place1": db.get_rank_for_user(data[0], 1),
-        "place2": db.get_rank_for_user(data[0], 2),
-        "results": db.get_final_result_for_student(data[0], 2),
+        "score_sum": db.get_final_sum_for_user(data[0][0]),
+        "place1": db.get_rank_for_user(data[0][0], 1),
+        "place2": db.get_rank_for_user(data[0][0], 2),
+        "results": db.get_final_result_for_student(data[0][0], 2),
         "avatar": None,
     }
 
