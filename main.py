@@ -46,6 +46,6 @@ def dashboard(id):
 
 
 if __name__ == "__main__":
-    # import __init__db
-    # parser.populate_db()
+    import __init__db
+    parser.populate_db()
     app.run(host="0.0.0.0", port=5000)

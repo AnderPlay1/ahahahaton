@@ -104,7 +104,7 @@ def parse_the_data():
         else:
             round = 2
 
-        contents = open(f, 'r').read()
+        contents = open(f, 'r', encoding='utf-8').read()
         parsed = parse_file(contents)
         for i in parsed:
             i['school'] = None
