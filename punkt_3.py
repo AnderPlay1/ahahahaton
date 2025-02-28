@@ -24,7 +24,7 @@ def dashboard(id):
 def standings():
     round  = request.args.get('round')  or 'both' # 1/2/both
     grade  = request.args.get('grade')  or 'all'  # all/11/10/9/10l/9l/8l
-    style  = request.args.get('style')  or 'rich' # rich/bare
+#    style  = request.args.get('style')  or 'rich' # rich/bare
     school = request.args.get('school') or 'all'  # all/<school name>
     time   = request.args.get('time')   or 'end'  # end/<time>
     

@@ -188,8 +188,10 @@ def search(round: str, time, grade: str, school: str):
             round = 2
         else:
             round = 1
-        results = get_results_for_user_for_tour(uid, round)
-        res.append(results)
+        if time == 'end':
+            time = '99999'
+        results = get_results_for_user_for_tour_before(uid, round, time)
+        res.append(results[0])
 
     return res
 
