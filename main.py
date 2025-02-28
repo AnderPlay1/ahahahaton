@@ -1,5 +1,6 @@
 from flask import Flask, render_template, session, request, redirect, url_for, flash
 from backend import data_to_region_stat, data_to_school_stat
+import html_parser as parser
 
 app = Flask(__name__)
 
@@ -21,4 +22,6 @@ def dashboard(id):
 
 
 if __name__ == "__main__":
+    import __init__db
+    parser.populate_db()
     app.run(host="0.0.0.0", port=5000)

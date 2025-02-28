@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import db_functions as db
 import glob
 import os
 import re
@@ -74,9 +75,11 @@ def parse_spb():
 
 def parse_the_data():
     '''
-    @returns {
+    @returns [{
       'rank': str,
       'name': str,
+      'surname': str,
+      'patronimyc': str,
       'region': str,
       'grade': int,
       'tasks': List[int]         # -1 - no attempts, other - score
@@ -85,7 +88,7 @@ def parse_the_data():
       'round': int,
       'result': Optional[string] # участник/призер/победитель,
       'time': int,               # 120/150/...
-    }
+    }]
     '''
     moscow_data = parse_moscow()
     spb_data = parse_spb()
@@ -114,9 +117,18 @@ def parse_the_data():
                 
             i['round'] = round
             i['time'] = int(time)
+            
+            name_parts = i['name'].split(' ')
+            name_parts += [''] * (3 - len(name_parts))
+            i['name'] = name_parts[1].strip()
+            i['surname'] = name_parts[0].strip()
+            i['patronimyc'] = name_parts[2].strip()
+
             res.append(i)
     return res
 
 
+def populate_db():
+    ...
 
 
