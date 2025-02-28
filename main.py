@@ -1,11 +1,10 @@
 from flask import Flask, render_template, session, request, redirect, url_for, flash
-
+from backend import data_to_region_stat
 app = Flask(__name__)
 
 @app.route('/')
 def statistics_by_region():
-
-    return render_template('stat.html')
+    return render_template('stat.html', arr = data_to_region_stat())
 
 @app.route('/stat_by_school')
 def statistics_by_school():
