@@ -178,7 +178,7 @@ def search(round: str, time, grade: str, school: str):
     if filters:
         q += ' WHERE '
         q += ' AND '.join(filters)
-    
+    # берем всех юзеров, учитывая фильтры по классу и школе. вродь работает
     users = cursor.execute(q, params).fetchall()
     res = []
     for i in users:
@@ -187,12 +187,14 @@ def search(round: str, time, grade: str, school: str):
         if round == 'both':
             round = 2
         else:
-            round = 1
+            round = int(round)
+        # когда Коля изменит схему может баговать
         if time == 'end':
             time = '99999'
         results = get_results_for_user_for_tour_before(uid, round, time)
         res.append(results[0])
-
+    
+    # если будешь добавлять сортировку и все такое, то сюда
     return res
 
 def get_student_for_region(region):
