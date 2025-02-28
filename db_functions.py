@@ -1,7 +1,5 @@
 import sqlite3
 
-from main import results
-
 connect = sqlite3.connect("Database.db")
 cursor = connect.cursor()
 
@@ -14,9 +12,9 @@ def add_user(data):
     cursor.execute("INSERT INTO Users (name, surname, patronymic, form, region, school) VALUES (?, ?, ?, ?, ?, ?)", params)
     connect.commit()
 
-def add_curent_results(data, time, tour):
+def add_results(data):
     """
-    :param data: List[Dict{name:str, surname:str, patronymic:str, form:int, region:str, school:str, rank:str, score:List[int]}]
+    :param data: List[Dict{name:str, surname:str, patronymic:str, form:int, region:str, school:str, rank:str, score:List[int], round:int, tyme:str}]
     :param time: str
     :return: -
     """
@@ -28,7 +26,7 @@ def add_curent_results(data, time, tour):
             id_user = cursor.execute(
                 "SELECT ID FROM Users WHERE name = ? AND surname = ? AND patronymic = ? AND form = ? AND region = ? AND school = ?", params).fetchall()
         id_user = id_user[0][0]
-        params = [id_user, time, tour, item["rank"]]
+        params = [id_user, item["time"], item["round"], item["rank"]]
         params += item["score"]
         cursor.execute("INSERT INTO Scores (ID_user, time, tour, rank, task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params)
     connect.commit()
