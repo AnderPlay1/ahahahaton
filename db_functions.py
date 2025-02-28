@@ -150,6 +150,14 @@ def get_school_with_more_than_three_students():
     result = cursor.execute("SELECT DISTINCT school FROM Users GROUP BY school HAVING count(DISTINCT ID) > 2").fetchall()
     return result
 
+def get_results_for_user_for_tour_before(id_user, tour, time):
+    """
+    :param id_user: int
+    :param tour: int
+    :return: List[Tuple(ID:int, ID_user:int, time:str, tour:int, rank:str, task_1:int, task_2:int, ... , task_8:int)]
+    """
+    result = cursor.execute("SELECT * FROM Scores WHERE ID_User = ? AND tour = ? AND time < ? ORDER BY time DESC", [id_user, tour, time]).fetchall()
+    return result
 
 def search(round: str, time, grade: str, school: str):
     q = "SELECT * FROM Users"
@@ -184,6 +192,14 @@ def search(round: str, time, grade: str, school: str):
         res.append(results)
 
     return res
+
+def get_student_for_region(region):
+    """
+    :param region: str
+    :return: List[Tuple(ID:int, name:str, surname:str, patronymic:str, form:int, region:str, school:str)]
+    """
+    result = cursor.execute("SELECT * FROM Users WHERE region = ?", [region]).fetchall()
+    return result
 
 
 
