@@ -12,7 +12,7 @@ def statistics_by_region():
 
 @app.route("/stat_by_school")
 def statistics_by_school():
-    return render_template("stat.html", arr=data_to_school_stat())
+    return render_template("stat_by_school.html", arr=data_to_school_stat())
 
 
 @app.route("/results")
@@ -28,7 +28,7 @@ def dashboard(id):
         "first_name": "Иван",
         "middle_name": "Иванович",
         "school": "Гимназия №1",
-        "region": "Москва",
+        "region": "Санкт Петербург",
         "grade": 11,
         "score": 100,
         "place": 1,
