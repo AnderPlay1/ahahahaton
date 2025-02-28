@@ -66,7 +66,7 @@ def get_results_for_user(id_user):
     result = cursor.execute("SELECT * FROM Scores WHERE ID_User = ? ORDER BY tour, time DESC", [id_user]).fetchall()
     return result
 
-def get_results_for_use_for_tour(id_user, tour):
+def get_results_for_user_for_tour(id_user, tour):
     """
     :param id_user: int
     :param tour: int
@@ -112,7 +112,7 @@ def get_final_results_for_user(id_user):
     :param id_user: int
     :return: List[Tuple(ID_user:int, task_1:int, task_2:int, ... , task_8:int)]
     """
-    result = cursor.execute("SELECT ID_user, task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE ID_user = ? ORDER BY tour, tone me DESC LIMIT 1", [id_user]).fetchall()
+    result = cursor.execute("SELECT ID_user, task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE ID_user = ? ORDER BY tour, time DESC LIMIT 1", [id_user]).fetchall()
     return result
 
 def get_rank_for_user(id_user, tour):
@@ -149,3 +149,45 @@ def get_school_with_more_than_three_students():
     """
     result = cursor.execute("SELECT DISTINCT school FROM Users GROUP BY school HAVING count(DISTINCT ID) > 2").fetchall()
     return result
+
+
+def search(round: str, time, grade: str, school: str):
+    q = "SELECT * FROM Users"
+    filters = []
+    params = []
+    if grade != 'all':
+        if grade in '11 10 9':
+            filters.append('form = ?')
+            params.append(int(grade))
+        else:
+            grade = int(grade.removesuffix('l'))
+            filters.append('form <= ?')
+            params.append(grade)
+    if school != 'all':
+        filters.append('school = ?')
+        params.append(school)
+    
+    if filters:
+        q += ' WHERE '
+        q += ' AND '.join(filters)
+    
+    users = cursor.execute(q, params).fetchall()
+    res = []
+    for i in users:
+        # ДЯДЯ СТЭН Я ТЕБЕ ВЕРЮ
+        uid = i[0]
+        if round == 'both':
+            round = 2
+        else:
+            round = 1
+        results = get_results_for_user_for_tour(uid, round)
+        res.append(results)
+
+    return res
+
+
+
+
+    
+
+
