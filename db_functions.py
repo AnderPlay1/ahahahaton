@@ -66,6 +66,15 @@ def get_results_for_user(id_user):
     result = cursor.execute("SELECT * FROM Scores WHERE ID_User = ? ORDER BY tour, time DESC", [id_user]).fetchall()
     return result
 
+def get_results_for_use_for_tour(id_user, tour):
+    """
+    :param id_user: int
+    :param tour: int
+    :return: List[Tuple(ID:int, ID_user:int, time:str, tour:int, rank:str, task_1:int, task_2:int, ... , task_8:int)]
+    """
+    result = cursor.execute("SELECT * FROM Scores WHERE ID_User = ? AND tour = ? ORDER BY time DESC", [id_user, tour]).fetchall()
+    return result
+
 def get_region_for_school(school):
     """
     :param school: str
