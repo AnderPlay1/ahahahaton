@@ -105,6 +105,8 @@ def parse_the_data():
         contents = open(f, 'r').read()
         parsed = parse_file(contents)
         for i in parsed:
+            i['school'] = None
+            i['result'] = None
             for m in moscow_data:
                 if (m['name'].lower() in i['name'].lower() 
                     and m['grade'] == i['grade']):
