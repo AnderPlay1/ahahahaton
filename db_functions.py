@@ -159,7 +159,7 @@ def get_results_for_user_for_tour_before(id_user, tour, time):
     result = cursor.execute("SELECT * FROM Scores WHERE ID_User = ? AND tour = ? AND time < ? ORDER BY time DESC", [id_user, tour, time]).fetchall()
     return result
 
-def search(round: str, time, grade: str, school: str):
+def search(round: str, time: str, grade: str, school: str):
     q = "SELECT * FROM Users"
     filters = []
     params = []
@@ -190,7 +190,9 @@ def search(round: str, time, grade: str, school: str):
             round = int(round)
         # когда Коля изменит схему может баговать
         if time == 'end':
-            time = '99999'
+            time = 99999
+        else:
+            time = int(time)
         results = get_results_for_user_for_tour_before(uid, round, time)
         res.append(results[0])
     
