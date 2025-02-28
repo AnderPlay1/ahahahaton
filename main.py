@@ -46,18 +46,18 @@ def results():
 
 @app.route("/dashboard/<int:id>")
 def dashboard(id):
-    # user = dashboard_data(id)
-    user = {
-        "last_name": "Иванов",
-        "first_name": "Иван",
-        "middle_name": "Иванович",
-        "school": "Гимназия №1",
-        "region": "Санкт Петербург",
-        "grade": 11,
-        "score": 100,
-        "place": 1,
-        "avatar": None,
-    }
+    user = dashboard_data(id)
+    # user = {
+    #     "last_name": "Иванов",
+    #     "first_name": "Иван",
+    #     "middle_name": "Иванович",
+    #     "school": "Гимназия №1",
+    #     "region": "Санкт Петербург",
+    #     "grade": 11,
+    #     "score": 100,
+    #     "place": 1,
+    #     "avatar": None,
+    # }
     return render_template(
         "dashboard.html",
         user_id=id,
