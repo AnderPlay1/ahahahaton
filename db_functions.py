@@ -14,7 +14,7 @@ def add_user(data):
 
 def add_results(data):
     """
-    :param data: List[Dict{name:str, surname:str, patronymic:str, grade:int, region:str, school:str, rank:str, tasks:List[int], round:int, time:str}]
+    :param data: List[Dict{name:str, surname:str, patronymic:str, grade:int, region:str, school:str, rank:str, tasks:List[int], round:int, time:int}]
     :return: -
     """
     for item in data:
@@ -51,7 +51,7 @@ def get_all_students():
 
 def get_results_for_time(time, tour):
     """
-    :param time: str
+    :param time: int
     :param tour: Tuple(int)
     :return: List[Tuple(rank:str, form:int, name:str, surname:str, patronymic:str, region:str, school:str, task_1:int, task_2:int, ... , task_8:int)]
     """
@@ -61,7 +61,7 @@ def get_results_for_time(time, tour):
 def get_results_for_user(id_user):
     """
     :param id_user: int
-    :return: List[Tuple(ID:int, ID_user:int, time:str, tour:int, rank:str, task_1:int, task_2:int, ... , task_8:int)]
+    :return: List[Tuple(ID:int, ID_user:int, time:int, tour:int, rank:str, task_1:int, task_2:int, ... , task_8:int)]
     """
     result = cursor.execute("SELECT * FROM Scores WHERE ID_User = ? ORDER BY tour, time DESC", [id_user]).fetchall()
     return result
@@ -154,7 +154,7 @@ def get_results_for_user_for_tour_before(id_user, tour, time):
     """
     :param id_user: int
     :param tour: int
-    :return: List[Tuple(ID:int, ID_user:int, time:str, tour:int, rank:str, task_1:int, task_2:int, ... , task_8:int)]
+    :return: List[Tuple(ID:int, ID_user:int, time:int, tour:int, rank:str, task_1:int, task_2:int, ... , task_8:int)]
     """
     result = cursor.execute("SELECT * FROM Scores WHERE ID_User = ? AND tour = ? AND time < ? ORDER BY time DESC", [id_user, tour, time]).fetchall()
     return result

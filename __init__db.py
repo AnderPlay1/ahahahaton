@@ -7,7 +7,7 @@ cursor.execute("""
     CREATE TABLE IF NOT EXISTS Scores (
         ID       INTEGER PRIMARY KEY AUTOINCREMENT,
         ID_user  INTEGER REFERENCES Users (ID),
-        time     TEXT,
+        time     INTEGER
         tour     INTEGER,
         rank     TEXT,
         task_1   INTEGER,
