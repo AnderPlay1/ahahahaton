@@ -16,7 +16,7 @@ cursor.execute("""
         task_5   INTEGER,
         task_6   INTEGER,
         task_7   INTEGER,
-        task_8   INTEGER,   
+        task_8   INTEGER   
     );
 """)
 cursor.execute("""

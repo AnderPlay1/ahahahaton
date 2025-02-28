@@ -14,12 +14,12 @@ def add_user(data):
 
 def add_results(data):
     """
-    :param data: List[Dict{name:str, surname:str, patronymic:str, form:int, region:str, school:str, rank:str, score:List[int], round:int, tyme:str}]
+    :param data: List[Dict{name:str, surname:str, patronymic:str, grade:int, region:str, school:str, rank:str, score:List[int], round:int, time:str}]
     :param time: str
     :return: -
     """
     for item in data:
-        params = [data['name'], data['surname'], data['patronymic'], data["form"], data['region'], data['school']]
+        params = [data['name'], data['surname'], data['patronymic'], data["grade"], data['region'], data['school']]
         id_user = cursor.execute("SELECT ID FROM Users WHERE name = ? AND surname = ? AND patronymic = ? AND form = ? AND region = ? AND school = ?", params).fetchall()
         if len(id_user) == 0:
             add_user(item)

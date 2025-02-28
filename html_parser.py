@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import db_functions as db
 import glob
 import os
 import re
@@ -127,5 +128,7 @@ def parse_the_data():
     return res
 
 
+def populate_db():
+    ...
 
 
