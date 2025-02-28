@@ -1,6 +1,6 @@
 import sqlite3
 
-connect = sqlite3.connect("Database.db")
+connect = sqlite3.connect("Database.db", check_same_thread=False)
 cursor = connect.cursor()
 
 def add_user(data):
@@ -35,7 +35,7 @@ def get_final_sum_for_user(id_user):
     :param id_user: int
     :return: result:int
     """
-    result = cursor.execute("SELECT sum(task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8) FROM Scores WHERE ID_user = ? ORDER BY time LIMIT 1", [id_user]).fetchall()
+    result = cursor.execute("SELECT task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE ID_user = ? ORDER BY time LIMIT 1", [id_user]).fetchall()
     if len(result) == 0:
         result = 0
     else:
