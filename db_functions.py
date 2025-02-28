@@ -142,3 +142,10 @@ def get_final_result_for_student(id_user, tour):
     """
     result = cursor.execute("SELECT task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8 FROM Scores WHERE id_user = ? AND tour = ? ORDER BY time DESC LIMIT 1",[id_user, tour]).fetchall()[0]
     return result
+
+def get_school_with_more_than_three_students():
+    """
+    :return: List[Tuple(school:str)]
+    """
+    result = cursor.execute("SELECT DISTINCT school FROM Users GROUP BY school HAVING count(DISTINCT ID) > 2").fetchall()
+    return result
