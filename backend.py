@@ -1,6 +1,5 @@
 
 
-
 def data_to_region_stat():
     response = dict()
     participants = dict()
@@ -11,13 +10,13 @@ def data_to_region_stat():
     #запрос к бд
     data = []# ([0.id, 1.name, 2.sur, 3.opt, 4.reg, 5.school])
     for user in data:
-        points = 0#запрос к бд по сум баллам
+        points = 123#запрос к бд по сум баллам
         if user[4] not in participants:
             participants[user[4]] = 1
         else:
             participants[user[4]] += 1
 
-        if points >= win_points:
+        if points >= 40:
             if user[4] not in winners:
                 winners[user[4]] = 1
             else:
@@ -28,9 +27,9 @@ def data_to_region_stat():
             else:
                 diplomas[user[4]] += 1
 
-        if points >= prizer_points:
+        if points >= 25:
             if user[4] not in prizer:
-                prizer[user[4]] = 1
+                prizer[user[4]] = 25
             else:
                 prizer[user[4]] += 1
 
@@ -39,14 +38,15 @@ def data_to_region_stat():
             else:
                 diplomas[user[4]] += 1
 
-    response["participants"] = participants
-    response["winners"] = winners
-    response["prizer"] = prizer
-    response["diplomas"] = diplomas
+    response["participants"] = places(participants)
+    response["winners"] = places(winners)
+    response["prizer"] = places(prizer)
+    response["diplomas"] = places(diplomas)
+    return response
 
-
-def places(arr: list[dict[str, int]]) -> list[dict[str, str, int]]:
-    arr2 = [(arr[x]['name'], arr[x]['cnt']) for x in range(len(arr))]
+def places(arr: dict[str, int]) -> list[dict[str, str, int]]:
+    arr2 = list(arr.items())
+    #print(arr2)
     arr2.sort(key=lambda x: (x[1], x[0]))
     qqq = list(arr2[x][1] for x in range(len(arr2)))
     places = []
@@ -62,3 +62,5 @@ def places(arr: list[dict[str, int]]) -> list[dict[str, str, int]]:
             places.append({'place': w, 'name': arr2[j - 1][0], 'cnt': arr2[j - 1][1]})
         now += cnt
     return places
+
+print(data_to_region_stat())
