@@ -1,4 +1,5 @@
 import sqlite3
+import os
 
 connect = sqlite3.connect("Database.db")
 cursor = connect.cursor()
@@ -30,5 +31,7 @@ cursor.execute("""
         school      TEXT
     );
 """)
+cursor.execute("DELETE FROM Scores")
+cursor.execute("DELETE FROM Users")
 connect.commit()
 connect.close()
