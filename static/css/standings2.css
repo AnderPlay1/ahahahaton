@@ -206,3 +206,7 @@ span.awardRC {
     margin-right: 2pt;
     background: #CEFFD0;
 }
+
+a:visited, a:active, a:link, a:hover {
+    color: inherit;
+}

@@ -198,7 +198,7 @@
                 </div> -->
                 <div class="info-item">
                     <span class="info-label">📘 Класс:</span>
-                    <p class="info-value">{{ user.grade }} класс</p>
+                    <p class="info-value">{{ user.class }} класс</p>
 
                 </div>
                 <div style="display: flex; gap: 20px; width: 100%;">
@@ -224,6 +224,15 @@
                     // Get data from Flask and parse JSON
                     const data = JSON.parse('{{ data | tojson | safe }}');
                     const data2 = JSON.parse('{{ data2 | tojson | safe }}');
+
+                    // Get min and max ranks from both tours
+                    const allRanks = [...data.map(item => item[1]), ...data2.map(item => item[1])];
+                    const minRank = Math.min(...allRanks);
+                    const maxRank = Math.max(...allRanks);
+                    
+                    // Calculate adjusted min and max for y-axis
+                    const adjustedMin = Math.max(1, minRank - 10);
+                    const adjustedMax = Math.min(maxRank + 10, 377);
 
                     // Format data for the line chart
                     const formattedData = data.map(item => ({
@@ -320,8 +329,8 @@
                                 },
                                 y: {
                                     reverse: true,
-                                    min: 1,
-                                    max: 377,
+                                    min: adjustedMin,
+                                    max: adjustedMax,
                                     title: {
                                         display: true,
                                         text: 'Место в рейтинге'
