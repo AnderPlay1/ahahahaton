@@ -3,7 +3,7 @@ import os
 if os.path.exists("Database.db"):
     print("\u001b[35;1m Killed all goidas \u001b[0m")
     os.remove("Database.db")
-from backend import data_to_region_stat, data_to_school_stat, dashboard_data
+from backend import data_to_region_stat, data_to_school_stat, dashboard_data, type_of_participant 
 import html_parser as parser
 from db_functions import search
 import db_functions as db
@@ -43,6 +43,7 @@ def results():
         for human in search("both", "end", "all", "all")
     ]
     users.sort(key=lambda x: (-x["total"], x["name"]))
+    users = type_of_participant(users)
     return render_template(
         "results.html",
         participants=users,

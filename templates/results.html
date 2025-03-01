@@ -11,7 +11,7 @@
         <tr>
             <td>
                 <center><a name="name">
-                        <h2>Тридцать шестая всероссийская олимпиада школьников по информатике, Первый тур</h2>
+                        <h2>Тридцать шестая всероссийская олимпиада школьников по информатике, Второй тур</h2>
                     </a>
                     <p>5:00:00 из 5:00:00<br>статус: закончен</p>
                     <table class="standings" id="standings">
@@ -32,7 +32,7 @@
                         </thead>
                         <tbody>
                             {% for participant in participants %}
-                            <tr class="row{{ loop.index0 % 2 }}">
+                            <tr class="{% if participant.type == 'Победитель' %}row-win-{{ loop.index0 % 2 }}{% elif participant.type == 'Призер' %}row-prize-{{ loop.index0 % 2 }}{% else %}row{{ loop.index0 % 2 }}{% endif %}">
                                 <td class="rankl">{{ participant.place }}</td>
                                 <td class="party"><a href="dashboard/{{ participant.id }}">{{ participant.name }} ({{ participant.region }}, {{ participant.grade
                                     }} класс)</a></td>

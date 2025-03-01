@@ -150,7 +150,7 @@ def data_to_school_stat():
         else:
             participants[user[6]] += 1
 
-        if 464 <= points < 573:
+        if points >= 573:
             if user[6] not in winners:
                 winners[user[6]] = 1
             else:
@@ -161,9 +161,9 @@ def data_to_school_stat():
             else:
                 diplomas[user[6]] += 1
 
-        if points >= 573:
+        if 464 <= points < 573:
             if user[6] not in prizer:
-                prizer[user[6]] = 25
+                prizer[user[6]] = 1
             else:
                 prizer[user[6]] += 1
 
@@ -223,3 +223,47 @@ def dashboard_data(id):
         "avatar": None,
     }
 
+def type_of_participant(arr: list[dict[str,int,str,str,int,None|str,list[int],int]]):
+    """
+    :param arr: List[Dict[str, int, str, str, str, int, List[int], int]]
+    :return: List[Dict[str, int, str, str, str, int, List[int], int, str]]
+    """
+    total_participants = len(arr)
+    
+    # Sort by total score in descending order
+    sorted_arr = sorted(arr, key=lambda x: x["total"], reverse=True)
+    
+    # Group participants by place
+    place_groups = {}
+    for participant in sorted_arr:
+        if "-" in participant["place"]:
+            start, end = map(int, participant["place"].split("-"))
+            place_key = f"{start}-{end}"
+        else:
+            place_key = participant["place"]
+        
+        if place_key not in place_groups:
+            place_groups[place_key] = []
+        place_groups[place_key].append(participant)
+    
+    # Assign types based on place groups
+    winners_cutoff = int(total_participants * 0.08)
+    prizers_cutoff = int(total_participants * 0.46)
+    
+    participants_processed = 0
+    for place_key in sorted(place_groups.keys(), key=lambda x: int(x.split("-")[-1])):
+        group = place_groups[place_key]
+        
+        if participants_processed + len(group) <= winners_cutoff and all(p["total"] >= 400 for p in group):
+            type_to_assign = "Победитель"
+        elif participants_processed + len(group)<= prizers_cutoff and all(p["total"] >= 400 for p in group):
+            type_to_assign = "Призер"
+        else:
+            type_to_assign = "Участник"
+        
+        # Assign same type to all participants in the group
+        for participant in group:
+            participant["type"] = type_to_assign
+        
+        participants_processed += len(group)
+    return arr
