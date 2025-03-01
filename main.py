@@ -43,6 +43,9 @@ def results():
         for human in search(tour, time, grade, school)
     ]
     users.sort(key=lambda x: (-x["total"], x["name"]))
+    if tour == '2':
+        for i in range(len(users)):
+            users[i]['place'] = str(i)
     users = type_of_participant(users)
     return render_template(
         "results.html",
