@@ -10,35 +10,48 @@
     <div class="filter-container" style="margin: 20px auto; max-width: 600px; padding: 20px; background: #f5f5f5; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         <form id="filterForm" onsubmit="applyFilters(event)" style="display: flex; align-items: flex-end; gap: 15px;">
             <div style="flex: 0 1 80px;">
-            <label for="tour" style="display: block; margin-bottom: 5px; font-weight: bold;">Тур:</label>
-            <select id="tour" name="tour" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="both">Оба</option>
-            </select>
+                <label for="tour" style="display: block; margin-bottom: 5px; font-weight: bold;">Тур:</label>
+                <select id="tour" name="tour" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="both" selected>Оба</option>
+                </select>
             </div>
             <div style="flex: 0 1 100px;">
-            <label for="grade" style="display: block; margin-bottom: 5px; font-weight: bold;">Класс:</label>
-            <select id="grade" name="grade" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                <option value="all">Все</option>
-                <option value="11">11</option>
-                <option value="10">10</option>
-                <option value="9">9</option>
-                <option value="10l">Меньше 11</option>
-                <option value="9l">Меньше 10</option>
-                <option value="8l">Меньше 9</option>
-            </select>
+                <label for="grade" style="display: block; margin-bottom: 5px; font-weight: bold;">Класс:</label>
+                <select id="grade" name="grade" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="all" selected>Все</option>
+                    <option value="11">11</option>
+                    <option value="10">10</option>
+                    <option value="9">9</option>
+                    <option value="10l">Меньше 11</option>
+                    <option value="9l">Меньше 10</option>
+                    <option value="8l">Меньше 9</option>
+                </select>
             </div>
             <div style="flex: 0 1 120px;">
-            <label for="time" style="display: block; margin-bottom: 5px; font-weight: bold;">Время (мин):</label>
-            <input type="number" id="time" name="time" min="0" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                <label for="time" style="display: block; margin-bottom: 5px; font-weight: bold;">Время (мин):</label>
+                <input type="number" id="time" name="time" min="0" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
             </div>
             <div style="flex: 1 1 200px;">
-            <label for="school" style="display: block; margin-bottom: 5px; font-weight: bold;">Школа:</label>
-            <input type="text" id="school" name="school" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                <label for="school" style="display: block; margin-bottom: 5px; font-weight: bold;">Школа:</label>
+                <select id="school" name="school" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="all" selected>Все</option>
+                    <option value="None">None</option>
+                    <option value="Л2Ш">Л2Ш</option>
+                </select>
+            </div>
+            <div style="flex: 0 1 100px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Дипломы:</label>
+                <div>
+                    <input type="radio" id="richNo" name="rich" value="0">
+                    <label for="richNo">Нет</label>
+                    <input type="radio" id="richYes" name="rich" value="1" checked>
+                    <label for="richYes">Да</label>
+                </div>
             </div>
             <div style="flex: 0 0 auto;">
-            <button type="submit" style="padding: 8px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Применить</button>
+                <button type="submit" style="padding: 8px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Применить</button>
             </div>
         </form>
     </div>
@@ -68,7 +81,7 @@
                         </thead>
                         <tbody>
                             {% for participant in participants %}
-                            <tr class="{% if participant.type == 'Победитель' %}row-win-{{ loop.index0 % 2 }}{% elif participant.type == 'Призер' %}row-prize-{{ loop.index0 % 2 }}{% else %}row{{ loop.index0 % 2 }}{% endif %}">
+                            <tr class="{% if participant.type == 'Победитель' %}row-win-{{ loop.index0 % 2 }}{% elif participant.type == 'Призер' %}row-prize-{{ loop.index0 % 2 }}{% else %}row0{{ loop.index0 % 2 }}{% endif %}">
                                 <td class="rankl">{{ participant.place }}</td>
                                 <td class="party"><a href="dashboard/{{ participant.id }}">{{ participant.name }} ({{ participant.region }}, {{ participant.grade }} класс)</a></td>
                                 {% for score in participant.scores %}
@@ -106,6 +119,28 @@
             }
 
             window.location.href = `/results?${params.toString()}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tour = urlParams.get('tour');
+
+            if (tour === '1') {
+                hideColumns([6,7,8,9]);
+            } else if (tour === '2') {
+                hideColumns([2,3,4,5]);
+            }
+        });
+
+        function hideColumns(columns) {
+            const table = document.getElementById('standings');
+            const rows = table.rows;
+
+            for (let i = 0; i < rows.length; i++) {
+                for (let j = 0; j < columns.length; j++) {
+                    rows[i].cells[columns[j]].style.display = 'none';
+                }
+            }
         }
     </script>
 </body>
