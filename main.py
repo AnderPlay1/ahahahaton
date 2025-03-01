@@ -38,7 +38,7 @@ def results():
             "grade": db.get_student(human[1])[0][4],
             "school": db.get_student(human[1])[0][6],
             "scores": human[5:],
-            "total": sum(human[5:]),
+            "total": sum(max(x,0) for x in human[5:]),
         }
         for human in search("both", "end", "all", "all")
     ]
