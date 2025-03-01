@@ -24,11 +24,10 @@ def statistics_by_school():
 
 @app.route("/results")
 def results():
-    # print(search("both", "end", "all", "all"))
-    for human in search("2", "end", "all", "all"):
-        print(human)
-        # if len(db.get_student(human[1])) < 6:
-        #     print(human, db.get_student(human[1]))
+    tour = request.args.get('tour', 'both')
+    grade = request.args.get('grade', 'all')
+    time = request.args.get('time', 'end')
+    school = request.args.get('school', 'all')
     users = [
         {   
             "place": human[4],
@@ -40,7 +39,7 @@ def results():
             "scores": human[5:],
             "total": sum(max(x,0) for x in human[5:]),
         }
-        for human in search("both", "end", "all", "all")
+        for human in search(tour, time, grade, school)
     ]
     users.sort(key=lambda x: (-x["total"], x["name"]))
     users = type_of_participant(users)
@@ -53,17 +52,6 @@ def results():
 @app.route("/dashboard/<int:id>")
 def dashboard(id):
     user = dashboard_data(id)
-    # user = {
-    #     "last_name": "Иванов",
-    #     "first_name": "Иван",
-    #     "middle_name": "Иванович",
-    #     "school": "Гимназия №1",
-    #     "region": "Санкт Петербург",
-    #     "grade": 11,
-    #     "score": 100,
-    #     "place": 1,
-    #     "avatar": None,
-    # }
     first_places = [(x * 60,y) for x,y in db.get_rank_for_user_time(id, 1)]
     first_scores = [(x * 60, y) for x,y in db.get_scores_for_user_time(id, 1)]
     w = (0,int(first_places[-1][-1].split('-')[0]))

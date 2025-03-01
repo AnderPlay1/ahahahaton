@@ -228,7 +228,7 @@ def type_of_participant(arr: list[dict[str,int,str,str,int,None|str,list[int],in
     :param arr: List[Dict[str, int, str, str, str, int, List[int], int]]
     :return: List[Dict[str, int, str, str, str, int, List[int], int, str]]
     """
-    total_participants = len(arr)
+    total_participants = 377
     
     # Sort by total score in descending order
     sorted_arr = sorted(arr, key=lambda x: x["total"], reverse=True)
@@ -250,8 +250,10 @@ def type_of_participant(arr: list[dict[str,int,str,str,int,None|str,list[int],in
     winners_cutoff = int(total_participants * 0.08)
     prizers_cutoff = int(total_participants * 0.46)
     
-    participants_processed = 0
+    
+    # print(participants_processed, prizers_cutoff, winners_cutoff)
     for place_key in sorted(place_groups.keys(), key=lambda x: int(x.split("-")[-1])):
+        participants_processed = int(place_key.split('-')[0]) - 1
         group = place_groups[place_key]
         
         if participants_processed + len(group) <= winners_cutoff and all(p["total"] >= 400 for p in group):
@@ -264,6 +266,5 @@ def type_of_participant(arr: list[dict[str,int,str,str,int,None|str,list[int],in
         # Assign same type to all participants in the group
         for participant in group:
             participant["type"] = type_to_assign
-        
-        participants_processed += len(group)
+    print(arr)
     return arr
