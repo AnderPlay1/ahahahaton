@@ -56,7 +56,6 @@ def results():
         for human in search(tour, time, grade, school)
     ]
     users.sort(key=lambda x: (-x["total"], x["name"]))
-    users = type_of_participant(users)
     if tour == "both" and int(rich) == 1:
         users = type_of_participant(users)
     else:
