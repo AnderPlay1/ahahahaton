@@ -188,7 +188,7 @@ def search(round: str, time: str, grade: str, school: str):
     filters = []
     params = []
     if grade != 'all':
-        if grade in '11 10 9':
+        if grade in ['11', '10', '9']:
             filters.append('form = ?')
             params.append(int(grade))
         else:
@@ -214,7 +214,7 @@ def search(round: str, time: str, grade: str, school: str):
             round = int(round)
         # когда Коля изменит схему может баговать
         if time == 'end':
-            time = 30000
+            time = 300
         else:
             time = int(time)
         results = get_results_for_user_for_tour_before(uid, round, time)
@@ -232,6 +232,12 @@ def get_student_for_region(region):
     result = cursor.execute("SELECT * FROM Users WHERE region = ?", [region]).fetchall()
     return result
 
+def get_all_schools():
+    """
+    :return: List[Tuple(school:str)]
+    """
+    result = cursor.execute("SELECT DISTINCT school FROM Users").fetchall()
+    return result
 
 
 
