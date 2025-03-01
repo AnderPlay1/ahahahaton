@@ -61,7 +61,7 @@ def results():
     else:
         if tour == '2':
             for i in range(len(users)):
-                users[i]['place'] = str(i)
+                users[i]['place'] = str(i + 1)
         for x in users:
             x["type"] = "Участник"
     return render_template(
